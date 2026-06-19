@@ -12,7 +12,7 @@ local Window = Rayfield:CreateWindow({
 local Tab = Window:CreateTab("Main", 4483362458)
 
 Tab:CreateButton({
-    Name = "Collect Hidden Weapon Boxes",
+    Name = "Get All Weapons (World 1)",
     Callback = function()
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
@@ -53,7 +53,7 @@ Tab:CreateButton({
 
         Rayfield:Notify({
             Title = "Finished",
-            Content = "Visited all weapon boxes.",
+            Content = "Got All Weapons!.",
             Duration = 5
         })
     end
