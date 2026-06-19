@@ -1,0 +1,60 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "PTHFM",
+    LoadingTitle = "Script",
+    LoadingSubtitle = "by Luis",
+    ConfigurationSaving = {
+        Enabled = false
+    }
+})
+
+local Tab = Window:CreateTab("Main", 4483362458)
+
+Tab:CreateButton({
+    Name = "Collect Hidden Weapon Boxes",
+    Callback = function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        -- Store original position
+        local originalCFrame = humanoidRootPart.CFrame
+
+        -- Folder containing MeshParts
+        local folder = workspace:FindFirstChild("HiddenWeaponBoxes")
+        if not folder then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "HiddenWeaponBoxes folder not found!",
+                Duration = 5
+            })
+            return
+        end
+
+        local waitTime = 1
+
+        -- Teleport to each MeshPart
+        for _, part in ipairs(folder:GetChildren()) do
+            if part:IsA("MeshPart") then
+                humanoidRootPart.CFrame = part.CFrame
+                task.wait(waitTime)
+            end
+        end
+
+        -- Return to original position
+        humanoidRootPart.CFrame = originalCFrame
+
+        -- Move MachineGun in front of player
+        local weapon = folder:FindFirstChild("MachineGun")
+        if weapon and weapon:IsA("BasePart") then
+            weapon.CFrame = humanoidRootPart.CFrame * CFrame.new(0, 0, -2)
+        end
+
+        Rayfield:Notify({
+            Title = "Finished",
+            Content = "Visited all weapon boxes.",
+            Duration = 5
+        })
+    end
+})
